@@ -99,6 +99,8 @@
     margin-bottom: 18px;
   }
   .bio { font-size: 16px; color: var(--ink); max-width: 60ch; }
+  .top-contact { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 13px; font-size: 14px; }
+  .top-contact a { color: var(--ink); }
 
   .emg {
     margin: 40px 0 0;
@@ -317,13 +319,17 @@
   <a href="#data-modeling">Data Modeling</a>
   <a href="#emg2qwerty">emg2qwerty</a>
   <a href="#preference">Preference Engine</a>
-  <a href="#messaging">Messaging</a>
+  <a href="#messaging">Message Infrastructure</a>
   <a href="#stack">Stack</a>
-  <a href="#contact">Contact</a>
 </nav>
 <div class="wrap">
   <h1>Kevin<br>Zou</h1>
   <p class="bio">17, San Francisco, CA</p>
+  <div class="top-contact">
+    <a href="mailto:kevin@ditto.ai">kevin@ditto.ai</a>
+    <a href="https://github.com/KevKlaw">github/KevKlaw</a>
+    <a href="https://www.linkedin.com/in/kevin-zou-3931533aa/">linkedin</a>
+  </div>
 
   <div class="emg">
     <pre id="emg" aria-hidden="true"></pre>
@@ -452,7 +458,7 @@
 
     <div class="entry">
       <div class="idx">[04]</div>
-      <h2 id="messaging">Messaging Infrastructure</h2>
+      <h2 id="messaging">Message Infrastructure</h2>
       <div class="meta">unified send API · channel adapters · backend at scale</div>
       <ul>
         <li>The product is messages in and messages out, so the backend is a <b>messaging system
@@ -487,15 +493,6 @@
       <div class="stack-row"><span class="stack-cat">Frontend</span><span class="stack-techs">React · Tailwind</span></div>
       <div class="stack-row"><span class="stack-cat">ML / Data</span><span class="stack-techs">PyTorch · NumPy · ArcFace / AuraFace embeddings</span></div>
       <div class="stack-row"><span class="stack-cat">Other</span><span class="stack-techs">cellular / SIM / eUICC · EMG</span></div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="sec-label">Contact</div>
-    <div class="links">
-      <a href="mailto:kevin@ditto.ai">kevin@ditto.ai</a>
-      <a href="https://github.com/KevKlaw">github/KevKlaw</a>
-      <a href="https://www.linkedin.com/in/kevin-zou-3931533aa/">linkedin</a>
     </div>
   </section>
 
