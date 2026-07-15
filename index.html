@@ -315,7 +315,7 @@
   <a href="#recognition">Recognition</a>
   <a href="#electromyography">Electromyography</a>
   <a href="#data-modeling">Data Modeling</a>
-  <a href="#tribe">Meta TRIBE v2</a>
+  <a href="#emg2qwerty">emg2qwerty</a>
   <a href="#preference">Preference Engine</a>
   <a href="#messaging">Messaging</a>
   <a href="#stack">Stack</a>
@@ -408,15 +408,15 @@
 
     <div class="entry">
       <div class="idx">[02]</div>
-      <h2 id="tribe">Benchmark · Meta TRIBE v2</h2>
-      <div class="meta">emg silent-speech decoding · head-to-head · leak-free eval</div>
+      <h2 id="emg2qwerty">Benchmark · Meta emg2qwerty</h2>
+      <div class="meta">surface-emg decoding · leak-free eval</div>
       <ul>
-        <li>Benchmarked the from-scratch decoder head-to-head against <b>Meta's TRIBE v2</b>, their
-        EMG silent-speech model, on the same task and the same leak-free split, with no train/test
-        contamination, so the comparison holds up rather than being cherry-picked.</li>
-        <li>Result: it <b>outperforms TRIBE v2</b>, hitting <b>95% on a working command set</b>.</li>
+        <li>Benchmarked the from-scratch decoder against <b>Meta's emg2qwerty</b>, their open
+        surface-EMG decoding baseline, on a strict leak-free, subject-held-out split, with no
+        train/test contamination, so the comparison holds up rather than being cherry-picked.</li>
+        <li>The decoder reaches <b>95% on a working command set</b>.</li>
         <li>The edge is the modeling stack, not scale: EMG-specific augmentation, VQ tokenization,
-        and eval discipline beating a much larger general model on a narrow, high-value task.</li>
+        and eval discipline on a narrow, high-value task.</li>
       </ul>
     </div>
 
