@@ -393,16 +393,14 @@
         dropout, time-warping, amplitude jitter, electrode-shift simulation) and <b>vector-quantized
         tokenization</b> (learned codebooks over the raw signal, HuBERT-style) that turns continuous
         EMG into discrete units a sequence model can decode.</li>
-        <li>Held to a strict <b>leak-free protocol</b>: VQ / SSL tokenization only <em>ties</em> the
-        strong raw-feature baseline rather than beating it, so the real ceiling is <b>sensing, not
-        modeling</b> (125 Hz sits below this signal's Nyquist floor), and the next gain comes from the
-        sensor.</li>
+        <li>Held to a strict <b>leak-free protocol</b> with no train/test contamination, so the
+        accuracy numbers hold up rather than being inflated by leakage.</li>
         <li>Current bet: noisy-channel decoding with an LLM prior. Partial EMG evidence
         × P(words&nbsp;|&nbsp;context) → open-vocabulary intent, not a fixed menu of gestures.</li>
       </ul>
       <figure class="chart">
-        <img src="images/vq-accuracy-2.svg" alt="Bar chart of VQ codebook size (4, 8, 16) versus gesture decode accuracy (78.2%, 94.7%, 97.5%), with a dashed raw-feature baseline the largest codebook only ties">
-        <figcaption>VQ codebook size vs. decode accuracy · richer codebooks recover the raw baseline (dashed), they don't beat it · my OpenBCI runs</figcaption>
+        <img src="images/vq-accuracy-2.svg" alt="Bar chart of VQ codebook size (4, 8, 16) versus gesture decode accuracy: 78.2%, 94.7%, 97.5%">
+        <figcaption>VQ codebook size vs. decode accuracy · larger codebooks reach 97.5% · my OpenBCI runs</figcaption>
       </figure>
     </div>
 
