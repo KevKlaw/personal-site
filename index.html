@@ -552,5 +552,16 @@
     if (para) para.addEventListener("mouseenter", function () { burst = 1; });
   })();
 </script>
+<script>
+  // kevinzou.net analytics beacon (Cloudflare Worker + D1)
+  (function () {
+    try {
+      var i = new Image();
+      i.src = "https://kevinzou-analytics.sparkling-cake-cc2b.workers.dev/px?p=" +
+        encodeURIComponent(location.pathname) + "&r=" +
+        encodeURIComponent(document.referrer) + "&t=" + Date.now();
+    } catch (e) {}
+  })();
+</script>
 </body>
 </html>
