@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kevin Zou</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▚</text></svg>">
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #1a1613;
+    --emph: #000000;
+    --dim: #6c655b;
+    --acc: #e8641f;
+    --rule: rgba(0, 0, 0, 0.13);
+    --perf: rgba(0, 0, 0, 0.32);
+    --mono: "Berkeley Mono", "BerkeleyMono Nerd Font Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { background: var(--bg); scroll-behavior: smooth; }
+  body {
+    font-family: var(--mono);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse 72% 46% at 74% -14%, rgba(255, 150, 60, 0.14), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  ::selection { background: var(--acc); color: #fff; }
+
+  a {
+    color: var(--emph);
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 100, 31, 0.6);
+    text-underline-offset: 3px;
+    transition: color .15s ease, text-decoration-color .15s ease;
+  }
+  a:hover { color: var(--acc); text-decoration-color: var(--acc); }
+
+  .wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 72px 24px 48px; }
+
+  section { scroll-margin-top: 30px; }
+  .entry h2, .subhead { scroll-margin-top: 42px; }
+  .nav {
+    position: fixed;
+    top: 22px;
+    right: 26px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+  }
+  .nav .nav-label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--acc);
+    align-self: stretch;
+    text-align: right;
+    padding-bottom: 8px;
+    margin-bottom: 3px;
+    border-bottom: 1px solid var(--perf);
+  }
+  .nav a {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+  }
+  .nav a::before {
+    content: "→";
+    margin-right: 7px;
+    color: var(--acc);
+    opacity: 0;
+    transition: opacity .15s ease;
+  }
+  .nav a:hover { color: var(--acc); }
+  .nav a:hover::before { opacity: 1; }
+  @media (max-width: 940px) { .nav { display: none; } }
+
+  h1 {
+    font-size: clamp(40px, 9vw, 74px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    text-transform: uppercase;
+    color: var(--emph);
+    margin-bottom: 18px;
+  }
+  .bio { font-size: 16px; color: var(--ink); max-width: 60ch; }
+
+  .emg {
+    margin: 40px 0 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 0 14px;
+  }
+  .emg pre {
+    font-family: var(--mono);
+    font-size: clamp(26px, 6vw, 48px);
+    line-height: 1.05;
+    color: var(--acc);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .emg .label {
+    color: var(--dim);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .gallery { margin-top: 44px; }
+  .gallery .shots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 22px;
+    margin-top: 12px;
+  }
+  .gallery figure {
+    margin: 0;
+    background: #fff;
+    padding: 10px 10px 8px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  }
+  .gallery figure img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+  }
+  .gallery figcaption {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 9px;
+    text-align: center;
+  }
+  .gallery .clip {
+    margin: 22px 0 0;
+    max-width: 300px;
+    background: #fff;
+    padding: 8px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  }
+  .gallery .clip video { width: 100%; display: block; border-radius: 2px; }
+
+  .rec .sec-label { margin-bottom: 22px; }
+  .rec-row { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+  .rec-row + .rec-row { margin-top: 26px; }
+  .rec-text { flex: 1 1 260px; }
+  .rec-text p { max-width: 46ch; font-size: 16px; color: var(--ink); }
+  .rec-text p b { color: var(--emph); font-weight: 700; }
+  .rec-ticket {
+    width: 250px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    flex: 0 0 auto;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  }
+  .ditto p { max-width: 62ch; font-size: 16px; color: var(--ink); }
+  .ditto p b { color: var(--emph); font-weight: 700; }
+
+  section { margin-top: 72px; }
+  .sec-label {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acc);
+    font-weight: 700;
+    margin-bottom: 22px;
+  }
+  .sec-label::before { content: "// "; color: var(--dim); }
+
+  .entry {
+    border-top: 1px dashed var(--perf);
+    padding: 30px 0 34px;
+    position: relative;
+    display: flow-root;
+  }
+  .entry .shot {
+    float: right;
+    width: 300px;
+    max-width: 42%;
+    margin: 2px 0 14px 22px;
+    background: #fff;
+    padding: 8px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  }
+  .entry .shot img { width: 100%; display: block; border-radius: 2px; }
+  .entry .shot figcaption {
+    text-align: center;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 7px;
+  }
+  @media (max-width: 640px) {
+    .entry .shot { float: none; width: 100%; max-width: 100%; margin: 0 0 16px; }
+  }
+  .entry:last-of-type { border-bottom: 1px dashed var(--perf); }
+  .entry::before, .entry::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px dashed var(--perf);
+  }
+  .entry::before { left: -31px; }
+  .entry::after  { right: -31px; }
+  .entry .idx { font-size: 12px; color: var(--acc); letter-spacing: 0.18em; }
+  .entry h2 {
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin: 6px 0 4px;
+    color: var(--emph);
+  }
+  .meta {
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 18px;
+  }
+  .entry ul { list-style: none; max-width: 62ch; }
+  .entry li { padding-left: 22px; position: relative; margin-bottom: 11px; color: var(--ink); }
+  .entry li::before { content: "▸"; position: absolute; left: 0; color: var(--acc); }
+  .entry li b { color: var(--emph); font-weight: 700; }
+  .subhead {
+    font-size: 17px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--emph);
+    font-weight: 700;
+    margin: 26px 0 12px;
+  }
+  .chart { clear: both; margin: 22px 0 4px; }
+  .chart img { width: 100%; max-width: 560px; height: auto; display: block; border: 1px solid var(--rule); border-radius: 6px; background: #fff; }
+  .chart figcaption { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-top: 8px; }
+  code { font-family: var(--mono); background: rgba(0, 0, 0, 0.06); padding: 0 4px; border-radius: 3px; }
+  .ph { color: var(--acc); border-bottom: 1px dotted var(--acc); }
+  .about p { max-width: 64ch; font-size: 16px; color: var(--ink); }
+  .about p b { color: var(--emph); font-weight: 700; }
+  .note {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 14px;
+    padding-left: 22px;
+  }
+  .note::before { content: "// "; }
+
+  .thesis p { max-width: 62ch; font-size: 16px; color: var(--ink); margin-bottom: 14px; }
+  .thesis p b { color: var(--emph); font-weight: 700; }
+
+  .principles ul { list-style: none; max-width: 62ch; }
+  .principles li { border-top: 1px solid var(--rule); padding: 12px 0; color: var(--dim); }
+  .principles li:last-child { border-bottom: 1px solid var(--rule); }
+  .principles li span { color: var(--ink); }
+
+  .stack p { max-width: 62ch; font-size: 16px; color: var(--ink); margin-bottom: 20px; }
+  .stack p b { color: var(--emph); font-weight: 700; }
+  .stack-grid { display: grid; gap: 13px; max-width: 64ch; }
+  .stack-row { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+  .stack-cat { flex: 0 0 96px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc); font-weight: 700; }
+  .stack-techs { color: var(--ink); flex: 1 1 240px; }
+
+  .contact .links { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 15px; }
+  footer {
+    margin-top: 88px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    color: var(--dim);
+    font-size: 12px;
+  }
+
+  @media (max-width: 780px) {
+    .entry::before, .entry::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-label">Menu ↓</span>
+  <a href="#ditto">Ditto</a>
+  <a href="#recognition">Recognition</a>
+  <a href="#electromyography">Electromyography</a>
+  <a href="#data-modeling">Data Modeling</a>
+  <a href="#tribe">Meta TRIBE v2</a>
+  <a href="#preference">Preference Engine</a>
+  <a href="#messaging">Messaging</a>
+  <a href="#stack">Stack</a>
+  <a href="#contact">Contact</a>
+</nav>
+<div class="wrap">
+  <h1>Kevin<br>Zou</h1>
+  <p class="bio">17, San Francisco, CA</p>
+
+  <div class="emg">
+    <pre id="emg" aria-hidden="true"></pre>
+    <div class="label">ch2 · flexor carpi radialis · surface emg · 250 hz</div>
+  </div>
+
+  <section class="ditto" id="ditto">
+    <div class="sec-label">Ditto AI</div>
+    <p><b>Product Lead &amp; Member of Technical Staff</b> at <a href="https://ditto.ai">Ditto</a>, a
+    $10M venture-backed AI matchmaker that lives in your messages. Under the product, it's a
+    <b>data problem</b>: every conversation and every choice is behavioral signal, and the hard part is
+    turning that messy, subjective data into <b>calibrated decisions</b> about who to match. I own that
+    pipeline end to end: capturing the signal, banking rich per-user feature vectors, and building the
+    models that score and decide on top of them, plus the messaging backend that delivers the
+    agent.</p>
+  </section>
+
+  <section class="gallery">
+    <div class="shots">
+      <figure>
+        <img src="images/whiteboard-imsg.jpg" alt="At the whiteboard mapping the iMessage message-flow architecture">
+        <figcaption>mapping the messaging stack</figcaption>
+      </figure>
+      <figure>
+        <img src="images/photo-b.jpg" alt="A SIM7600X 4G modem board with a SIM card on a desk">
+        <figcaption>the 4G / SIM board behind the messaging work</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="rec" id="recognition">
+    <div class="sec-label">Recognition</div>
+    <div class="rec-row">
+      <div class="rec-text">
+        <p>Selected for <b>Y Combinator's in-person AI Startup School</b> at Chase Center, SF.</p>
+      </div>
+      <img class="rec-ticket" src="images/yc-ticket-v2.png" alt="Y Combinator AI Startup School admit-one ticket, Kevin Zou">
+    </div>
+    <div class="rec-row">
+      <div class="rec-text">
+        <p>Invited to <b>YC's Startup Internship Expo</b> for <b>Summer 2027</b>.</p>
+      </div>
+      <img class="rec-ticket" src="images/yc-internship.png" alt="YC Startup Internship Expo admit-one ticket, Kevin Zou">
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sec-label">Selected work</div>
+
+    <div class="entry" id="para">
+      <div class="idx">[01]</div>
+      <h2 id="electromyography">Electromyography</h2>
+      <div class="meta">surface emg · hardware + ml · stanford research</div>
+      <figure class="shot">
+        <img src="images/emg-setup.jpg" alt="EMG snap electrodes in hand beside the OpenBCI board and a laptop running the multi-channel signal GUI">
+        <figcaption>the rig: electrodes → OpenBCI → live signal</figcaption>
+      </figure>
+      <ul>
+        <li>EMG silent-speech research at <b>Stanford</b>: a wearable that reads muscle activity off
+        the skin and decodes words said silently. Electrodes → signal → decoder, on a 16-channel
+        OpenBCI Cyton+Daisy rig, with an <b>MCP server</b> so an LLM agent can operate the hardware
+        itself and a real-time labeled-recording pipeline behind a from-scratch decoder.</li>
+      </ul>
+      <h3 class="subhead" id="data-modeling">Machine Learning &amp; Data Modeling</h3>
+      <ul>
+        <li>Built the decoder's modeling stack: EMG-specific <b>data augmentation</b> (channel
+        dropout, time-warping, amplitude jitter, electrode-shift simulation) and <b>vector-quantized
+        tokenization</b> (learned codebooks over the raw signal, HuBERT-style) that turns continuous
+        EMG into discrete units a sequence model can decode.</li>
+        <li>Held to a strict <b>leak-free protocol</b>: VQ / SSL tokenization only <em>ties</em> the
+        strong raw-feature baseline rather than beating it, so the real ceiling is <b>sensing, not
+        modeling</b> (125 Hz sits below this signal's Nyquist floor), and the next gain comes from the
+        sensor.</li>
+        <li>Current bet: noisy-channel decoding with an LLM prior. Partial EMG evidence
+        × P(words&nbsp;|&nbsp;context) → open-vocabulary intent, not a fixed menu of gestures.</li>
+      </ul>
+      <figure class="chart">
+        <img src="images/vq-accuracy-2.svg" alt="Bar chart of VQ codebook size (4, 8, 16) versus gesture decode accuracy (78.2%, 94.7%, 97.5%), with a dashed raw-feature baseline the largest codebook only ties">
+        <figcaption>VQ codebook size vs. decode accuracy · richer codebooks recover the raw baseline (dashed), they don't beat it · my OpenBCI runs</figcaption>
+      </figure>
+    </div>
+
+    <div class="entry">
+      <div class="idx">[02]</div>
+      <h2 id="tribe">Benchmark · Meta TRIBE v2</h2>
+      <div class="meta">emg silent-speech decoding · head-to-head · leak-free eval</div>
+      <ul>
+        <li>Benchmarked the from-scratch decoder head-to-head against <b>Meta's TRIBE v2</b>, their
+        EMG silent-speech model, on the same task and the same leak-free split, with no train/test
+        contamination, so the comparison holds up rather than being cherry-picked.</li>
+        <li>Result: it <b>outperforms TRIBE v2</b>, hitting <b>95% on a working command set</b>.</li>
+        <li>The edge is the modeling stack, not scale: EMG-specific augmentation, VQ tokenization,
+        and eval discipline beating a much larger general model on a narrow, high-value task.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="idx">[03]</div>
+      <h2 id="preference">Preference Engine · Attractiveness Scoring</h2>
+      <div class="meta">ditto research · multimodal LLM judge · face + embedding pipeline</div>
+      <ul>
+        <li>A matchmaking engine needs a <b>calibrated per-user scalar for physical attractiveness</b>:
+        subjective, fine-grained, and only comparable within a gender×ethnicity bucket (8
+        supported). Gold labels come from a per-user Elo fit on <b>6,231 human pairwise comparisons</b>,
+        with 887 men scored at ≥8 duels each.</li>
+        <li>Naive scoring fails: the deployed holistic rubric correlates with human Elo at only
+        <b>ρ = 0.315</b>. A multimodal LLM asked for an absolute rating collapses onto a few round
+        numbers.</li>
+        <li>The fix is <b>anchored pointwise scoring</b>: show the judge six human-calibrated anchor
+        faces from the same bucket, then ask for one rating on the gold Elo scale. That reaches
+        <b>ρ = 0.62–0.64</b>, beating every compare-then-aggregate scheme (adaptive Bradley–Terry
+        tops out at 0.50) at <b>~1/17 the model calls</b>.</li>
+        <li>Blending in an <b>identity-embedding Bradley–Terry head</b>, trained on raw duels over
+        512-d ArcFace / AuraFace embeddings, lifts correlation to <b>ρ = 0.698</b> on a 523-user
+        held-out set: the embeddings carry within-bucket signal the language pathway can't verbalize.</li>
+        <li>We hit a hard <b>perceptual resolution ceiling</b>: the judge emits only 112 distinct
+        scores across 538 users, and on near-equal faces it agrees with humans at 53.6% (chance). On a
+        subjective attribute, perception caps the judge, not prompting.</li>
+        <li><b>My part</b>, the face + embedding pipeline underneath: SCRFD / AuraFace detection,
+        owner-isolation blurring so only the right face in a group photo is scored (947 of 1,013
+        cohort photos retain a usable face), face-gating, and the identity-embedding infra the
+        Bradley–Terry head runs on. Bias handled as a constraint: per-bucket calibration, no
+        cross-bucket comparison, and equity gaps tracked where the data is too sparse to be
+        decision-grade.</li>
+      </ul>
+      <p class="note">research at Ditto</p>
+    </div>
+
+    <div class="entry">
+      <div class="idx">[04]</div>
+      <h2 id="messaging">Messaging Infrastructure</h2>
+      <div class="meta">unified send API · channel adapters · backend at scale</div>
+      <ul>
+        <li>The product is messages in and messages out, so the backend is a <b>messaging system
+        first</b>. One unified send API sits in front of every channel (iMessage, Instagram DMs), so
+        product code calls a single interface and never talks to a network directly.</li>
+        <li><b>Inbound.</b> Platform webhooks hit a normalizer that flattens each provider's payload
+        into one internal event shape, resolves it to a conversation, and hands it to the agent,
+        with idempotency keys so a retried or duplicated webhook never double-fires.</li>
+        <li><b>Outbound routing.</b> A routing layer spreads sends across a pool of senders with
+        per-sender queues, capacity scoring, rate-limit tracking, and health checks, so traffic flows
+        to the healthiest sender and one degraded path is isolated instead of taking the funnel down
+        with it.</li>
+        <li><b>Real endpoints at scale.</b> Delivery runs on a managed fleet of phone numbers / SIMs
+        across Mac-based workers and modems, each with its own session, health, and rate-limit
+        isolation, so the agent sends from real endpoints across iMessage and SMS without any single
+        number becoming a bottleneck or a point of failure.</li>
+        <li><b>Delivery.</b> Retries with backoff, durable session/conversation state, and worker
+        pools; replies stream out as multiple <code>|||</code>-delimited bubbles, first bubble in a
+        few hundred ms, so a thread reads like a person typing, not a wall of text.</li>
+        <li><b>Correctness under concurrency.</b> A wrong conversation-to-identity mapping would route
+        one person's message to another, so identity resolution and state transitions run atomically:
+        a single DB transaction, no unsafe fallbacks.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="stack" id="stack">
+    <div class="sec-label">Stack</div>
+    <div class="stack-grid">
+      <div class="stack-row"><span class="stack-cat">Languages</span><span class="stack-techs">TypeScript · Python · SQL</span></div>
+      <div class="stack-row"><span class="stack-cat">Backend</span><span class="stack-techs">Node.js · Prisma · Postgres · MongoDB · webhook &amp; queue infrastructure</span></div>
+      <div class="stack-row"><span class="stack-cat">Frontend</span><span class="stack-techs">React · Tailwind</span></div>
+      <div class="stack-row"><span class="stack-cat">ML / Data</span><span class="stack-techs">PyTorch · NumPy · ArcFace / AuraFace embeddings</span></div>
+      <div class="stack-row"><span class="stack-cat">Other</span><span class="stack-techs">cellular / SIM / eUICC · EMG</span></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="sec-label">Contact</div>
+    <div class="links">
+      <a href="mailto:kevin@ditto.ai">kevin@ditto.ai</a>
+      <a href="https://github.com/KevKlaw">github/KevKlaw</a>
+      <a href="https://www.linkedin.com/in/kevin-zou-3931533aa/">linkedin</a>
+    </div>
+  </section>
+
+  <footer>© 2026 Kevin Zou</footer>
+</div>
+
+<script>
+  (function () {
+    var el = document.getElementById("emg");
+    if (!el) return;
+    var CH = " ▁▂▃▄▅▆▇█", buf = [], i;
+    var burst = 0, ticksToBurst = 60;
+
+    function charWidth() {
+      var cs = getComputedStyle(el);
+      var c = charWidth._c || (charWidth._c = document.createElement("canvas"));
+      var ctx = c.getContext("2d");
+      ctx.font = cs.fontSize + " " + cs.fontFamily;
+      return ctx.measureText("█").width || 14;
+    }
+    function computeW() {
+      var avail = el.clientWidth || (el.parentElement && el.parentElement.clientWidth) || 320;
+      return Math.max(8, Math.floor(avail / charWidth()));
+    }
+    var W = computeW();
+    for (i = 0; i < W; i++) buf.push(0);
+
+    function render() {
+      var s = "";
+      for (i = 0; i < W; i++) s += CH[Math.min(8, Math.round(buf[i] * 8))];
+      el.textContent = s;
+    }
+    window.addEventListener("resize", function () {
+      var nw = computeW();
+      if (nw === W) return;
+      if (nw > W) { var pad = []; for (i = 0; i < nw - W; i++) pad.push(0); buf = pad.concat(buf); }
+      else { buf = buf.slice(buf.length - nw); }
+      W = nw;
+    });
+
+    function step() {
+      if (--ticksToBurst <= 0) { burst = 1; ticksToBurst = 120 + Math.floor(Math.random() * 200); }
+      burst *= 0.93;
+      if (burst < 0.02) burst = 0;
+      var v = Math.random() * 0.14 + burst * (0.35 + Math.random() * 0.65);
+      buf.push(Math.min(1, v)); buf.shift();
+      render();
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      for (i = 0; i < W; i++) { var d = Math.abs(i - W * 0.55); buf[i] = Math.max(Math.random() * 0.12, Math.exp(-d * d / 40) * 0.9 * Math.random()); }
+      render();
+      return;
+    }
+    setInterval(step, 50);
+    var para = document.getElementById("para");
+    if (para) para.addEventListener("mouseenter", function () { burst = 1; });
+  })();
+</script>
+</body>
+</html>

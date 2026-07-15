@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 410" font-family="'Berkeley Mono','JetBrains Mono',ui-monospace,monospace">
+  <rect width="640" height="410" fill="#ffffff"/>
+  <g stroke="rgba(0,0,0,0.10)" stroke-width="1">
+    <line x1="64" y1="70" x2="600" y2="70"/>
+    <line x1="64" y1="200" x2="600" y2="200"/>
+  </g>
+  <line x1="64" y1="330" x2="600" y2="330" stroke="rgba(0,0,0,0.30)" stroke-width="1"/>
+  <g fill="#6c655b" font-size="12" text-anchor="end">
+    <text x="52" y="74">100</text>
+    <text x="52" y="204">50</text>
+    <text x="52" y="334">0</text>
+  </g>
+  <g fill="#e8641f">
+    <rect x="103" y="126.68" width="100" height="203.32"/>
+    <rect x="282" y="83.78" width="100" height="246.22"/>
+    <rect x="461" y="76.5" width="100" height="253.5"/>
+  </g>
+  <line x1="64" y1="76.5" x2="600" y2="76.5" stroke="#1a1613" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="68" y="71" fill="#6c655b" font-size="10" letter-spacing="1.2">RAW-FEATURE BASELINE</text>
+  <g fill="#1a1613" font-size="16" font-weight="700" text-anchor="middle">
+    <text x="153" y="118">78.2%</text>
+    <text x="332" y="75">94.7%</text>
+    <text x="511" y="68">97.5%</text>
+  </g>
+  <g fill="#1a1613" font-size="13" text-anchor="middle">
+    <text x="153" y="352">K = 4</text>
+    <text x="332" y="352">K = 8</text>
+    <text x="511" y="352">K = 16</text>
+  </g>
+  <text x="64" y="386" fill="#6c655b" font-size="11" letter-spacing="1.4">VQ CODEBOOK SIZE  ·  GESTURE DECODE ACCURACY</text>
+</svg>
