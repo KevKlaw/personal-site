@@ -553,14 +553,28 @@
   })();
 </script>
 <script>
-  // kevinzou.net analytics beacon (Cloudflare Worker + D1)
+  // kevinzou.net analytics beacon (Cloudflare Worker + D1) — pageview + time on page
   (function () {
+    var W = "https://kevinzou-analytics.sparkling-cake-cc2b.workers.dev";
+    var vid = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    var start = Date.now(), sent = false;
     try {
       var i = new Image();
-      i.src = "https://kevinzou-analytics.sparkling-cake-cc2b.workers.dev/px?p=" +
-        encodeURIComponent(location.pathname) + "&r=" +
-        encodeURIComponent(document.referrer) + "&t=" + Date.now();
+      i.src = W + "/px?p=" + encodeURIComponent(location.pathname) +
+        "&r=" + encodeURIComponent(document.referrer) + "&vid=" + vid + "&t=" + start;
     } catch (e) {}
+    function leave() {
+      if (sent) return; sent = true;
+      var u = W + "/dur?vid=" + vid + "&s=" + Math.round((Date.now() - start) / 1000);
+      try {
+        if (navigator.sendBeacon) navigator.sendBeacon(u);
+        else { var im = new Image(); im.src = u + "&t=" + Date.now(); }
+      } catch (e) {}
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") leave();
+    });
+    window.addEventListener("pagehide", leave);
   })();
 </script>
 </body>
